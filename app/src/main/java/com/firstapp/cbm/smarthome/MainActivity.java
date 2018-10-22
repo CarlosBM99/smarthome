@@ -110,7 +110,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Map<String, String> map = dataSnapshot.getValue(Map.class);
 
+                String value = map.get("id");
+                String name = map.get("name");
+
+                mUsernames.remove(name);
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
