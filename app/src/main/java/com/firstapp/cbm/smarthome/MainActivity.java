@@ -44,11 +44,16 @@ public class MainActivity extends AppCompatActivity {
             try {
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();
-                Document doc = db.parse(new URL("https://www.w3schools.com/xml/note.xml").openStream());
-                NodeList list = doc.getElementsByTagName("to");
+                Document doc = db.parse(new URL("http://192.168.2.110:3161/devices").openStream());
+                NodeList list = doc.getElementsByTagName("id");
                 Log.i("E", list.item(0).getTextContent());
-            } catch ( Exception e){
+                //Document doc1 = db.parse(new URL("http://192.168.2.110:3161/devices/" + list.item(0).getTextContent()) + "/start");
+                //Document doc1 = db.parse(new URL("http://192.168.2.110:3161/devices/ID/inventory");
+                //NodeList list1 = doc1.getElementsByTagName("status");
+                //Log.i("E", list1.item(0).getTextContent());
 
+            } catch ( Exception e){
+                e.printStackTrace();
             }
             Log.i("Executing","Hello2");
             return null;
@@ -58,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Executing","Hello3");
         }
     }
-
 
 
     private Firebase mRef;
