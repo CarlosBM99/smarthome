@@ -22,7 +22,7 @@ class Subjects extends Component {
       <View style={styles.container}>
         <View style={{ padding: 20 }}>
           <View style={{ borderBottomWidth: 1 }}>
-            <Text style={{ fontSize: 20 }}>List of labs:</Text>
+            <Text style={{ fontSize: 20 }}>List of subjects:</Text>
           </View>
           <ScrollView style={{ margin: 30 }}>
             {

@@ -28,7 +28,8 @@ class SubjectDetails extends Component {
     this.state = {
       list: [],
       loading: false,
-      val: undefined
+      val: undefined,
+      studentsList: []
     }
     this._isMounted = false
   }
@@ -44,49 +45,57 @@ class SubjectDetails extends Component {
     })
     return false
   }
+  async getVal(){
+    let th = this
+    var db = Firebase.database()
+    var list = []
+    let studentsList = []
+    var listOfEPC = []
+    //console.log('st')
+    await db.ref().child('students').once('value', function(snapshot) {
+      snapshot.forEach(student => {
+        //console.log(student.val().name, student.val().id)
+        studentsList.push(student)
+      })
+      list = studentsList
+    })
+    return list
+  }
   componentWillMount() {
     this._isMounted = true
     let th = this
     var db = Firebase.database()
     var list = []
-    var list1 = []
-    var list2 = []
+    let studentsList = []
     var listOfEPC = []
-    console.log('st')
+    //console.log('st')
     db.ref().child('students').once('value', function(snapshot) {
       snapshot.forEach(student => {
-        console.log(student.val().name, student.val().id)
-        list1.push(student)
+        //console.log(student.val().name, student.val().id)
+        studentsList.push(student)
       })
-      th.setState({list: list1})
+      th.setState({studentsList: studentsList, list: studentsList})
     })
-    db.ref().child('currentState').on('value', function (snapshot) {
+    db.ref().child('currentState').on('value', async function (snapshot) {
       if (th._isMounted) {
-        list = list1
+        list = await th.getVal()
+        //console.log(th.state.studentsList.length)
         th.setState({ loading: true })
         snapshot.forEach(function (child) {
-          let v = 0
-          console.log()
-          list1.forEach((student,index) => {
-            if(student === child.val().name){
-              console.log('yeaaaaaa')
-              v = 1
+          th.state.studentsList.forEach((student,index) => {
+            //console.log('student -> ', student.val().id)
+            //console.log('child.val -> ', child.val().name)
+            if(student.val().id === child.val().name){
+              //console.log('yeaaaaaa')
               // delete from list
+              //console.log('b_del-> ', list.length)
               list.splice(index, 1)
+              //console.log('a_del-> ', list.length)
             }
           })
-          if(v === 0){
-            // add to list if it is not in
-            list1.forEach((student,index) => {
-              if(student === child.val().name){
-                list.push(student)
-              }
-            })
-          }
-
-          //list.push(child.val().name)
         });
-        console.log(list)
+
+        //console.log(list)
         th.setState({ list: list, loading: false })
         //th.setState({loading: false})
       }
@@ -109,7 +118,7 @@ class SubjectDetails extends Component {
           db.ref().child('currentState').set(listOfEPC)
         })
         .then(() => {
-          console.log(th.state.val)
+          //console.log(th.state.val)
         })
     }, 1000)
   }
