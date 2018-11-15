@@ -35,23 +35,60 @@ class SubjectDetails extends Component {
   static navigationOptions = {
     headerTitle: 'Details'
   }
-
+  checkExisting(name){
+    let list = this.state.list
+    list.forEach(student => {
+      if(student.id === name){
+        return true
+      }
+    })
+    return false
+  }
   componentWillMount() {
     this._isMounted = true
     let th = this
     var db = Firebase.database()
     var list = []
+    var list1 = []
+    var list2 = []
     var listOfEPC = []
     console.log('st')
+    db.ref().child('students').once('value', function(snapshot) {
+      snapshot.forEach(student => {
+        console.log(student.val().name, student.val().id)
+        list1.push(student)
+      })
+      th.setState({list: list1})
+    })
     db.ref().child('currentState').on('value', function (snapshot) {
       if (th._isMounted) {
-        list = []
+        list = list1
         th.setState({ loading: true })
         snapshot.forEach(function (child) {
-          list.push(child.val().name)
+          let v = 0
+          console.log()
+          list1.forEach((student,index) => {
+            if(student === child.val().name){
+              console.log('yeaaaaaa')
+              v = 1
+              // delete from list
+              list.splice(index, 1)
+            }
+          })
+          if(v === 0){
+            // add to list if it is not in
+            list1.forEach((student,index) => {
+              if(student === child.val().name){
+                list.push(student)
+              }
+            })
+          }
+
+          //list.push(child.val().name)
         });
         console.log(list)
         th.setState({ list: list, loading: false })
+        //th.setState({loading: false})
       }
     })
     this.interval = setInterval(function () {
@@ -62,6 +99,7 @@ class SubjectDetails extends Component {
           var doc = parser.parseFromString(responseText, "text/xml").documentElement
           var x = doc.getElementsByTagName("epc")
           for (i = 0; i < x.length; i++) {
+            let getCorrectName = 
             listOfEPC.push({
               name: x[i].childNodes[0].nodeValue
             })
@@ -94,8 +132,8 @@ class SubjectDetails extends Component {
               {
                 this.state.list.map((lab => {
                   return (
-                    <TouchableOpacity key={lab} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 10, flex: 1, borderWidth: 0.5, padding: 20, borderColor: 'tomato' }}>
-                      <Text>{lab}</Text>
+                    <TouchableOpacity key={lab.val().id} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 10, flex: 1, borderWidth: 0.5, padding: 20, borderColor: 'tomato' }}>
+                      <Text>{lab.val().name}</Text>
                     </TouchableOpacity>
                   )
                 }))
