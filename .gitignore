@@ -7,4 +7,5 @@
 .DS_Store
 /build
 /captures
+/smart_school/node_modules
 .externalNativeBuild
