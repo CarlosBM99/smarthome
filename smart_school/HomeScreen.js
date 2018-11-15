@@ -1,56 +1,5 @@
-/* import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-var DOMParser = require('xmldom').DOMParser
-
-export default class App extends React.Component {
-
-  constructor(props){
-    super(props)
-    this.state = {
-      val: undefined
-    }
-  }
-  componentDidMount() {
-    fetch('https://www.w3schools.com/xml/note.xml').then(response => response.text())
-      .then(responseText => {
-        var parser = new DOMParser()
-        var doc = parser.parseFromString(responseText, "text/xml").documentElement
-        var listNode = doc.getElementsByTagName("from")[0].firstChild.data
-        this.setState({val: listNode})
-      })
-      .then(()=>{
-        console.log(this.state.val)
-      })
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={{justifyContent: 'center', alignItems:'center', margin: 20}}>
-          <TouchableOpacity style={{padding: 20, borderWidth:1}}>
-            <Text>Subjects</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{justifyContent: 'center', alignItems:'center'}}>
-          <TouchableOpacity style={{padding: 20, borderWidth:1}}>
-            <Text>Objects</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}); */
-
 import React, { Component } from "react";
-import { 
+import {
   View,
   Text,
   StyleSheet,
@@ -64,7 +13,29 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{justifyContent: 'center', alignItems:'center', margin: 20}}>
+        <View style={{ flex: 1, backgroundColor: 'tomato', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Text>AA</Text>
+          </View>
+        </View>
+        <View style={{ flex: 1, backgroundColor: 'red', width: '100%', height: '100%' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Text>AA</Text>
+          </View>
+        </View>
+        <View style={{ flex: 1, backgroundColor: 'blue', width: '100%', height: '100%' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Text>AA</Text>
+
+          </View>
+        </View>
+        <View style={{ flex: 1, backgroundColor: 'yellow', width: '100%', height: '100%' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Text>AA</Text>
+
+          </View>
+        </View>
+        {/* <View style={{justifyContent: 'center', alignItems:'center', margin: 20}}>
           <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Subjects')}} style={{padding: 20, borderWidth:1}}>
             <Text>Subjects</Text>
           </TouchableOpacity>
@@ -73,7 +44,7 @@ class HomeScreen extends Component {
           <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Objects')}} style={{padding: 20, borderWidth:1}}>
             <Text>Objects</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     );
   }
@@ -85,6 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'white'
+    backgroundColor: 'white'
   }
 });
