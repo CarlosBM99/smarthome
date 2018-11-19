@@ -9,22 +9,9 @@ import {
 
 var DOMParser = require('xmldom').DOMParser
 
-import * as firebase from 'firebase';
+import {Firebase} from './SubjectDetails'
 
-var config = {
-  apiKey: "AIzaSyAPII-nQbiaYMFfEvMsRq_NCktWN9dHO5I",
-  authDomain: "iot-first-project-28e6a.firebaseapp.com",
-  databaseURL: "https://iot-first-project-28e6a.firebaseio.com",
-  projectId: "iot-first-project-28e6a",
-  storageBucket: "iot-first-project-28e6a.appspot.com",
-  messagingSenderId: "906289230462"
-};
-
-const Firebase = firebase.initializeApp(config);
-
-export {Firebase}
-
-class SubjectDetails extends Component {
+class LabsDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -54,7 +41,7 @@ class SubjectDetails extends Component {
     let studentsList = []
     var listOfEPC = []
     //console.log('st')
-    await db.ref().child('students').once('value', function(snapshot) {
+    await db.ref().child('lab').once('value', function(snapshot) {
       snapshot.forEach(student => {
         //console.log(student.val().name, student.val().id)
         studentsList.push(student)
@@ -71,7 +58,7 @@ class SubjectDetails extends Component {
     let studentsList = []
     var listOfEPC = []
     //console.log('st')
-    db.ref().child('students').once('value', function(snapshot) {
+    db.ref().child('lab').once('value', function(snapshot) {
       snapshot.forEach(student => {
         //console.log(student.val().name, student.val().id)
         studentsList.push(student)
@@ -128,15 +115,6 @@ class SubjectDetails extends Component {
     clearInterval(this.interval)
     this._isMounted = false
   }
-  penalties(){
-    var db = Firebase.database()
-    clearInterval(this.interval)
-    this.state.list.forEach(student => {
-      db.ref().child('students/' + student.val().key + '/penalties').once('value', function(snapshot){
-        db.ref().child('students/' + student.val().key + '/penalties').set(snapshot.val() + 1)
-      })
-    })
-  }
   render() {
     var listLabs = [
       'Carlos Bertomeu Marin',
@@ -161,16 +139,11 @@ class SubjectDetails extends Component {
             </ScrollView> : <Text>Loading</Text>}
           </View>
         </View>
-        <View style={{ flex: 1, margin: 30 }}>
-          <TouchableOpacity onPress={()=>{this.penalties()}} style={{ flex: 1, padding: 20, backgroundColor: 'green', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
-            <Text style={{ fontSize: 30, color: 'white' }}>Start</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
 }
-export default SubjectDetails;
+export default LabsDetails;
 
 const styles = StyleSheet.create({
   container: {

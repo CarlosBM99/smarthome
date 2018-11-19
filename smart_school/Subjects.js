@@ -9,7 +9,10 @@ import {
 
 class Subjects extends Component {
   static navigationOptions= {
-    headerTitle: 'Subjects'
+    headerTitle: 'Subjects',
+    headerStyle: {
+      backgroundColor: '#f78cb7'
+    }
   }
   render() {
     var subjectsList = [

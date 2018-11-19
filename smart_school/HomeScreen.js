@@ -43,7 +43,7 @@ class HomeScreen extends Component {
             <Icon name="ios-arrow-forward" color="white" size={0.09 * width} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1, backgroundColor: '#b0f96b', width: '100%', height: '100%', flexDirection: 'row' }}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Information')}} style={{ flex: 1, backgroundColor: '#b0f96b', width: '100%', height: '100%', flexDirection: 'row' }}>
           <View style={{ flex: 5, justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row', padding: 30 }}>
             <Image source={require('./assets/info_icon.png')} style={{ width: 0.25 * width,resizeMode: 'contain', height: 0.25 * width, tintColor: 'white' }} />
             <Text style={{ fontSize: 0.06 * width, paddingLeft: 0.06 * width, color: 'white', fontWeight: '700' }}>INFORMATION</Text>

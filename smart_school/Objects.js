@@ -9,14 +9,17 @@ import {
 
 class Objects extends Component {
   static navigationOptions = {
-    headerTitle: 'Objects'
+    headerTitle: 'Objects',
+    headerStyle: {
+      backgroundColor: '#87e5f2'
+    }
   }
   render() {
     var listLabs = [
-      'Quimica',
-      'Fisica',
-      'Biblio',
-      'Taller',
+      'Lab1 (High School)',
+      'Lab2 (Bachelor)',
+      'Lab3 (University)',
+      'Lab4 (University)',
     ]
     return (
       <View style={styles.container}>
@@ -28,7 +31,7 @@ class Objects extends Component {
             {
               listLabs.map((lab => {
                 return (
-                  <TouchableOpacity key={lab} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 10, flex: 1, borderWidth: 0.5, padding: 20 }}>
+                  <TouchableOpacity onPress={()=>{this.props.navigation.navigate('LabsDetails')}} key={lab} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 10, flex: 1, borderWidth: 0.5, padding: 20 }}>
                     <Text>{lab}</Text>
                   </TouchableOpacity>
                 )

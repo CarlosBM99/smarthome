@@ -5,6 +5,8 @@ import HomeScreen from './HomeScreen'
 import Subjects from './Subjects'
 import Objects from './Objects'
 import SubjectDetails from './SubjectDetails'
+import Information from './Information'
+import LabsDetails from './LabsDetails'
 
 export default createStackNavigator({
   Home: {
@@ -18,5 +20,11 @@ export default createStackNavigator({
   },
   Objects: {
     screen: Objects
+  },
+  Information: {
+    screen: Information
+  },
+  LabsDetails: {
+    screen: LabsDetails
   }
 });
