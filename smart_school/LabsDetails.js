@@ -57,10 +57,8 @@ class LabsDetails extends Component {
     var list = []
     let studentsList = []
     var listOfEPC = []
-    //console.log('st')
     db.ref().child('lab').once('value', function(snapshot) {
       snapshot.forEach(student => {
-        //console.log(student.val().name, student.val().id)
         studentsList.push(student)
       })
       th.setState({studentsList: studentsList, list: studentsList})
@@ -68,29 +66,19 @@ class LabsDetails extends Component {
     db.ref().child('currentState').on('value', async function (snapshot) {
       if (th._isMounted) {
         list = await th.getVal()
-        //console.log(th.state.studentsList.length)
         th.setState({ loading: true })
         snapshot.forEach(function (child) {
           th.state.studentsList.forEach((student,index) => {
-            //console.log('student -> ', student.val().id)
-            //console.log('child.val -> ', child.val().name)
             if(student.val().id === child.val().name){
-              //console.log('yeaaaaaa')
-              // delete from list
-              //console.log('b_del-> ', list.length)
-              list.splice(index, 1)
-              //console.log('a_del-> ', list.length)
+              delete list[index]
             }
           })
         });
-
-        //console.log(list)
         th.setState({ list: list, loading: false })
-        //th.setState({loading: false})
       }
     })
     this.interval = setInterval(function () {
-      fetch('http://localhost:3161/devices/simulator/inventory').then(response => response.text())
+      fetch('http://192.168.2.160:3161/devices/AdvanPay-m1-eu-160/inventory').then(response => response.text())
         .then(responseText => {
           listOfEPC = []
           var parser = new DOMParser()
