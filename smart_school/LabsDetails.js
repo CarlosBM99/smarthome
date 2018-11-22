@@ -78,7 +78,7 @@ class LabsDetails extends Component {
       }
     })
     this.interval = setInterval(function () {
-      fetch('http://192.168.2.160:3161/devices/AdvanPay-m1-eu-160/inventory').then(response => response.text())
+      fetch('http://localhost:3161/devices/simulator/inventory').then(response => response.text())
         .then(responseText => {
           listOfEPC = []
           var parser = new DOMParser()
