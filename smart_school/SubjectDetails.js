@@ -65,6 +65,7 @@ class SubjectDetails extends Component {
       })
       list = studentsList
     })
+    //console.log('List ->>>>>>', list)
     return list
   }
   componentWillMount() {
@@ -84,6 +85,8 @@ class SubjectDetails extends Component {
       if (th._isMounted) {
         list = await th.getVal()
         th.setState({ loading: true })
+        //console.log('List!!!!!! ')
+        //console.log(list)
         snapshot.forEach(child => {
           th.state.studentsList.forEach((student, index) => {
             if (student.val().id === child.val().name) {
@@ -91,11 +94,18 @@ class SubjectDetails extends Component {
             }
           })
         });
+        for(let index=0; index < list.length ; index++){
+          if(list[index] === undefined){
+            list.splice(index, 1)
+          }
+        }
+        //console.log('After Listt!!')
+        //console.log(list)
         th.setState({ list: list, loading: false })
       }
     })
     this.interval = setInterval(function () {
-      fetch('http://localhost:3161/devices/simulator/inventory').then(response => response.text())
+      fetch('http://192.168.2.160:3161/devices/AdvanPay-m1-eu-160/inventory').then(response => response.text())
         .then(responseText => {
           listOfEPC = []
           var parser = new DOMParser()
@@ -108,7 +118,6 @@ class SubjectDetails extends Component {
               })
           }
           th.setState({ val: listOfEPC })
-          // set in firebase
           db.ref().child('currentState').set(listOfEPC)
         })
         .then(() => {
@@ -121,17 +130,29 @@ class SubjectDetails extends Component {
     this._isMounted = false
   }
   penalties() {
+    let th = this
     var db = Firebase.database()
     clearInterval(this.interval)
-    if (this.state.list[0] === undefined) {
+    let cont = 0
+    console.log(this.state.list)
+    this.state.list.forEach(student =>{
+      cont= cont + 1
+    })
+    for(let index=0; index < this.state.list.length ; index++){
+      if(this.state.list[index] === undefined){
+        this.state.list.splice(index, 1)
+      }
+    }
+    console.log(cont)
+    if(cont === 0){
       console.log('EMPTY')
       this.setState({ allInClass: true })
     }
-    /* this.state.list.forEach(student => {
+    this.state.list.forEach(student => {
       db.ref().child('demo/' + student.val().key + '/penalties').once('value', function(snapshot){
         db.ref().child('demo/' + student.val().key + '/penalties').set(snapshot.val() + 1)
       })
-    }) */
+    })
   }
   render() {
     var listLabs = [

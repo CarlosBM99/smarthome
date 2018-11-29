@@ -29,7 +29,7 @@ class Information extends Component {
         let th = this
         th.setState({loading: true})
         var db = Firebase.database()
-        db.ref().child('students').on('value', function (snapshot) {
+        db.ref().child('demo').on('value', function (snapshot) {
             if(th._isMounted){
                 let studentsList = []
                 snapshot.forEach(student => {
